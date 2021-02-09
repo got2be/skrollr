@@ -235,6 +235,7 @@
 		options = options || {};
 
 		_constants = options.constants || {};
+		_scrollTarget = options.scrollTarget;
 
 		//We allow defining custom easings or overwrite existing.
 		if(options.easing) {
@@ -627,7 +628,7 @@
 		if(_isMobile) {
 			return _mobileOffset;
 		} else {
-			return window.pageYOffset || documentElement.scrollTop || body.scrollTop || 0;
+			return (_scrollTarget && _scrollTarget.scrollTop) || window.pageYOffset || documentElement.scrollTop || body.scrollTop || 0;
 		}
 	};
 
@@ -1765,6 +1766,9 @@
 
 	//Animation frame id returned by RequestAnimationFrame (or timeout when RAF is not supported).
 	var _animFrame;
+
+	// In case scroll target is not body
+	var _scrollTarget = null;
 
 	//Expose skrollr as either a global variable or a require.js module.
 	if(typeof define === 'function' && define.amd) {
